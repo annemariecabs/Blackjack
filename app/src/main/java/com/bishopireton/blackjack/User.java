@@ -1,5 +1,7 @@
 package com.bishopireton.blackjack;
 
+import android.widget.ImageView;
+
 import java.util.ArrayList;
 
 /**
@@ -8,9 +10,11 @@ import java.util.ArrayList;
 
 public class User {
     private ArrayList<Card> cards;
+    private ImageView[] images;
 
-    User(ArrayList<Card> c) {
+    User(ArrayList<Card> c, ImageView[] i) {
         cards = c;
+        images = i;
     }
 
     public void addCard(Card c) {
