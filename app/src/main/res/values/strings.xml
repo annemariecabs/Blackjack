@@ -6,4 +6,7 @@
     <string name="stay">STAY</string>
     <string name="double_down">DOUBLE DOWN</string>
     <string name="your_bet">BET:</string>
+    <string name="play">PLAY</string>
+    <string name="created">Created by AnneMarie Caballero</string>
+    <string name="credit">Card images created by Alex Winstanley and Peter Murphy Cover image sourced from Google Images</string>
 </resources>

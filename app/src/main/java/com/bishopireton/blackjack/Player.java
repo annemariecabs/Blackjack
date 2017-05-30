@@ -18,6 +18,11 @@ public class Player extends User {
         status = true;
     }
 
+    Player(ImageView[] i) {
+        super(new ArrayList<Card>(), i);
+        status = true;
+    }
+
     public boolean getStatus() {
         return status;
     }

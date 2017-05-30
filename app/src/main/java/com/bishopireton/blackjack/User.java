@@ -11,6 +11,7 @@ import java.util.ArrayList;
 public class User {
     private ArrayList<Card> cards;
     private ImageView[] images;
+    private int current;// keeps track of current ImageView
 
     User(ArrayList<Card> c, ImageView[] i) {
         cards = c;
@@ -27,5 +28,14 @@ public class User {
             sum += card.getRank();
 
         return sum;
+    }
+
+    public ImageView getNextView() {
+        current++;
+        return images[current];
+    }
+
+    public ArrayList<Card> getCards() {
+        return cards;
     }
 }

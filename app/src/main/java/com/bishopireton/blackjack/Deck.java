@@ -6,6 +6,7 @@ package com.bishopireton.blackjack;
 
 public class Deck {
     private Card[] cards;
+    private int current; //the current card that has been dealt
 
     Deck() {
         cards = new Card[52];
@@ -27,6 +28,8 @@ public class Deck {
 
             cards = swap(cards, j, random);
         }
+
+        current = 0; //resets the current field
     }
 
     public Card[] swap(Card[] cs, int f, int l) {
@@ -36,5 +39,11 @@ public class Deck {
 
         return cs;
     }
+
+    public Card deal() {
+        current++;
+        return cards[current - 1];
+    }
+
 
 }

@@ -39,8 +39,7 @@ public class Card {
         else if (rank > 10)
             return 11;
         else
-            return rank;
-    }
+            return rank;    }
 
     public boolean getAce() {
         return ace;
@@ -51,18 +50,18 @@ public class Card {
     }
 
     public int getImage() {
-        String name; //temp variable to hold the name before turning it into an id
+        String name = ""; //temp variable to hold the name before turning it into an id
         switch(suit) {
             case 1: //clubs
-                name = "club" + rank;
+                name = "clubs" + rank;
             case 2: //diamonds
-                name = "diamond" + rank;
+                name = "diamonds" + rank;
             case 3: //hearts
-                name = "heart" + rank;
+                name = "hearts" + rank;
             case 4: //spades
-                name = "spade" + rank;
+                name = "spades" + rank;
         }
 
-        return 0;//getResources().getIdentifier(name, "drawable", com.bishopireton.blackjack );
+        return 0;//getResources().getIdentifier(name, "drawable", com.bishopireton.blackjack.R.drawable);
     }
 }
