@@ -136,7 +136,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.529"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toRightOf="@+id/card6"
         app:layout_constraintRight_toLeftOf="@+id/card8"
         app:layout_constraintTop_toTopOf="parent"
