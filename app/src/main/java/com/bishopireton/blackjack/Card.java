@@ -37,7 +37,7 @@ public class Card {
                 return 11;
         }
         else if (rank > 10)
-            return 11;
+            return 10;
         else
             return rank;    }
 
@@ -47,21 +47,5 @@ public class Card {
 
     public void switchAce() {
         ace = !ace;
-    }
-
-    public int getImage() {
-        String name = ""; //temp variable to hold the name before turning it into an id
-        switch(suit) {
-            case 1: //clubs
-                name = "clubs" + rank;
-            case 2: //diamonds
-                name = "diamonds" + rank;
-            case 3: //hearts
-                name = "hearts" + rank;
-            case 4: //spades
-                name = "spades" + rank;
-        }
-
-        return 0;//getResources().getIdentifier(name, "drawable", com.bishopireton.blackjack.R.drawable);
     }
 }

@@ -15,18 +15,16 @@ public class MainActivity extends AppCompatActivity {
     public static Button stayButton;
 
 
-    //Make sure to change all ImageViews visibility to gone and buttons to invisible
-
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.opening_screen);
-        //setValues();
+        setContentView(R.layout.activity_main);
+        setValues();
+        playGame();
     }
 
     public void setValues() {
         //Setting the values
-        Card.cardBack = R.drawable.cardBack;
+        Card.cardBack = R.drawable.card_back;
         ImageView[] pCards = {(ImageView) findViewById(R.id.card6), (ImageView) findViewById(R.id.card2),
                 (ImageView) findViewById(R.id.card3), (ImageView) findViewById(R.id.card4),
                 (ImageView) findViewById(R.id.card5)};
@@ -53,35 +51,65 @@ public class MainActivity extends AppCompatActivity {
         hitButton.setVisibility(View.GONE);
         stayButton.setVisibility(View.GONE);
     }
-    public static void setCard(ImageView view, int id) {
-        //add something into setCard that simultaneously changes card values in other layout
-        view.setVisibility(View.VISIBLE);
-        view.setImageResource(id);
-    }
 
-    public static void hit(View view) {
-        player.addCard(deck.deal());
-    }
-
-    public void play(View view) {
-        setContentView(R.layout.activity_main);
-
+    //performs all actions from beginning of game till player's first choice to hit or stay
+    public void playGame() {
         for(int i = 0; i < 2; i++) {
             player.addCard(deck.deal());
             house.addCard(deck.deal());
         }
 
         //changes the ImageViews
-        setCard(player.getNextView(), player.getCards().get(0).getImage());
-        setCard(player.getNextView(), player.getCards().get(1).getImage());
-        setCard(house.getNextView(), Card.cardBack);
-        setCard(house.getNextView(), house.getCards().get(1).getImage());
+        setCard(player.nextView(), getImage(player.cards().get(0)));
+        setCard(house.nextView(), Card.cardBack);
+        setCard(player.nextView(), getImage(player.cards().get(1)));
+        setCard(house.nextView(), getImage(house.cards().get(1)));
 
+        //used for an immediate win
         if(player.sumCards() == 21 || house.sumCards() == 21);
         //Replace with winning layout and show dealer's card
 
         hitButton.setVisibility(View.VISIBLE);
         stayButton.setVisibility(View.VISIBLE);
+    }
 
+    public static void setCard(ImageView view, int id) {
+        //add something into setCard that simultaneously changes card values in other layout
+        view.setVisibility(View.VISIBLE);
+        view.setImageResource(id);
+    }
+
+    //hit function for either user
+    public void hit(User user) {
+        player.addCard(deck.deal());
+        setCard(user.nextView(), getImage(user.cards().get(user.size() - 1)));
+    }
+
+    //hit function for player
+    public void onClickHit(View view) {
+        hit(player);
+    }
+
+    public void onClickStay(View view) {
+        player.setStatus(false);
+        hitButton.setVisibility(View.GONE);
+        stayButton.setVisibility(View.GONE);
+    }
+
+    //gets the corresponding image for the Card passed
+    public int getImage(Card c) {
+        String name = ""; //temp variable to hold the name before turning it into an id
+        switch(c.getSuit()) {
+            case 1: //clubs
+                name = "clubs" + c.getRank();
+            case 2: //diamonds
+                name = "diamonds" + c.getRank();
+            case 3: //hearts
+                name = "hearts" + c.getRank();
+            case 4: //spades
+                name = "spades" + c.getRank();
+        }
+
+        return getResources().getIdentifier(name, "drawable", getPackageName());
     }
 }
