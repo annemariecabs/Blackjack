@@ -20,6 +20,7 @@ public class User {
         images = i;
         size = 0; //no cards have been dealt to the user yet
         status = true; //because the user is automatically playing
+        current = 0;
     }
 
     public void addCard(Card c) {
@@ -37,7 +38,7 @@ public class User {
 
     public ImageView nextView() {
         current++;
-        return images[current];
+        return images[current - 1];
     }
 
     public int size() {

@@ -9,8 +9,8 @@ import android.widget.ImageView;
  */
 
 public class Card {
-    private int rank; // rank of ace is 1
     private int suit; //club = 1; diamond = 2; heart = 3; spade = 4
+    private int rank; // rank of ace is 1
     private boolean ace; //if ace is true, ace acts as one, if not, ace is eleven
 
     public static int cardBack; //hold the id for the image that will act as all of the card's backs
@@ -20,12 +20,12 @@ public class Card {
         rank = r;
     }
 
-    public int getRank() {
-        return rank;
-    }
-
     public int getSuit() {
         return suit;
+    }
+
+    public int getRank() {
+        return rank;
     }
 
     //returns the value of a card in Blackjack

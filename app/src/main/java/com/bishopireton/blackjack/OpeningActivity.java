@@ -18,7 +18,7 @@ public class OpeningActivity extends AppCompatActivity {
     }
 
     public void play(View view) {
-        Intent whatsNext = new Intent(this, WinningActivity.class);
+        Intent whatsNext = new Intent(this, GameActivity.class);
         startActivity(whatsNext);
     }
 }
