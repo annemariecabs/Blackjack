@@ -1,5 +1,6 @@
 package com.bishopireton.blackjack;
 
+import android.view.View;
 import android.widget.ImageView;
 
 import java.util.ArrayList;
@@ -11,21 +12,18 @@ import java.util.ArrayList;
 public class User {
     private ArrayList<Card> cards;
     private ImageView[] images;
-    private int current;// keeps track of current ImageView
-    private int size; //the number of Cards cards contains
+    private int current;// keeps track of current ImageView and Card
     private boolean status; //still active (true) or has stayed (false)
 
     User(ArrayList<Card> c, ImageView[] i) {
         cards = c;
         images = i;
-        size = 0; //no cards have been dealt to the user yet
         status = true; //because the user is automatically playing
         current = 0;
     }
 
     public void addCard(Card c) {
         cards.add(c);
-        size++;
     }
 
     public int sumCards() {
@@ -36,13 +34,12 @@ public class User {
         return sum;
     }
 
-    public ImageView nextView() {
-        current++;
-        return images[current - 1];
+    public ImageView getNextView() {
+        return images[current];
     }
 
     public int size() {
-        return size;
+        return cards.size();
     }
 
     public ArrayList<Card> cards() {
@@ -50,6 +47,11 @@ public class User {
     }
 
     public boolean status() {return status;}
+
+    public Card getNextCard() {
+        current++;
+        return cards.get(current - 1);
+    }
 
     public void setStatus(boolean b) {status = b;}
 }

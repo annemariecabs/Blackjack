@@ -1,16 +1,16 @@
 package com.bishopireton.blackjack;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
 public class GameActivity extends AppCompatActivity {
 
-    public static Player player;
-    public static Computer house;
+    public static User player;
+    public static User house;
     public static Deck deck;
     public static Button hitButton;
     public static Button stayButton;
@@ -19,8 +19,6 @@ public class GameActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
-        Intent intent = new Intent(this, TestActivity.class);
-        startActivity(intent);
         setValues();
         playGame();
     }
@@ -39,13 +37,13 @@ public class GameActivity extends AppCompatActivity {
         deck.shuffle();
 
         player = new Player(pCards);
-        house = new Computer(cCards);
+        house = new Player(cCards);
 
         hitButton = (Button) findViewById(R.id.hit_button);
         stayButton = (Button) findViewById(R.id.stay_button);
 
         //set to gone because they should only appear as dealt
-        for(int i = 0; i < pCards.length; i++) {
+        for(int i = 0; i < cCards.length; i++) {
             pCards[i].setVisibility(View.GONE);
             cCards[i].setVisibility(View.GONE);
         }
@@ -55,7 +53,6 @@ public class GameActivity extends AppCompatActivity {
         stayButton.setVisibility(View.GONE);
     }
 
-    //performs all actions from beginning of game till player's first choice to hit or stay
     public void playGame() {
         for(int i = 0; i < 2; i++) {
             player.addCard(deck.deal());
@@ -63,29 +60,40 @@ public class GameActivity extends AppCompatActivity {
         }
 
         //changes the ImageViews
-        setCard(player.nextView(), CardImages.getImage(player.cards().get(0)));
-        setCard(house.nextView(), Card.cardBack);
-        setCard(player.nextView(), CardImages.getImage(player.cards().get(1)));
-        setCard(house.nextView(), CardImages.getImage(house.cards().get(1)));
+        //hardcoded because debugger would not assist in finding the problem
+        //with the shorter method
+        ImageView view = player.getNextView();
+        view.setImageResource(CardImages.getImage(player.getNextCard()));
+        view.setVisibility(View.VISIBLE);
+
+        view = house.getNextView();
+        view.setImageResource(CardImages.getImage(house.getNextCard()));
+        view.setVisibility(View.VISIBLE);
+
+        view = player.getNextView();
+        view.setImageResource(CardImages.getImage(player.getNextCard()));
+        view.setVisibility(View.VISIBLE);
+
+        view = house.getNextView();
+        view.setImageResource(CardImages.getImage(house.getNextCard()));
+        view.setVisibility(View.VISIBLE);
 
         //used for an immediate win
-        if(player.sumCards() == 21 || house.sumCards() == 21);
-        //Replace with winning layout and show dealer's card
+        if(player.sumCards() == 21 )
+            end("blackjack", player);
+        else if(house.sumCards() == 21)
+            end("blackjack", house);
 
         hitButton.setVisibility(View.VISIBLE);
         stayButton.setVisibility(View.VISIBLE);
     }
 
-    public static void setCard(ImageView view, int id) {
-        //add something into setCard that simultaneously changes card values in other layout
-        view.setVisibility(View.VISIBLE);
-        view.setImageResource(id);
-    }
-
     //hit function for either user
     public void hit(User user) {
         user.addCard(deck.deal());
-        setCard(user.nextView(), CardImages.getImage(user.cards().get(user.size() - 1)));
+        ImageView view = user.getNextView();
+        view.setVisibility(View.VISIBLE);
+        view.setImageResource(CardImages.getImage(user.getNextCard()));
     }
 
     //hit function for player
@@ -97,5 +105,21 @@ public class GameActivity extends AppCompatActivity {
         player.setStatus(false);
         hitButton.setVisibility(View.GONE);
         stayButton.setVisibility(View.GONE);
+    }
+
+    //only relevant to end so placed here
+    public static final String REASON = "com.bishopireton.blackjack.REASON";
+    public static final String WINNER = "com.bishopireton.blackjack.WINNER";
+
+    public void end(String reason, User winner) {
+
+        Intent whatsNext = new Intent(this, EndingActivity.class);
+        whatsNext.putExtra(REASON, reason);
+        if(winner.equals(player))
+            whatsNext.putExtra(WINNER, true);
+        else
+            whatsNext.putExtra(REASON, false);
+        startActivity(whatsNext);
+
     }
 }

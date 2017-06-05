@@ -10,12 +10,13 @@ public class Deck {
 
     Deck() {
         cards = new Card[52];
+        fill();
     }
 
     public void fill() {
         int pos = 0;
 
-        for (int s = 0; s < 4; s++)
+        for (int s = 1; s <= 4; s++)
             for (int r = 1; r < 14; r++) {
                 cards[pos] = new Card(s, r);
                 pos++;
@@ -44,6 +45,4 @@ public class Deck {
         current++;
         return cards[current - 1];
     }
-
-
 }
